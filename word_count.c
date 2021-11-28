@@ -210,4 +210,6 @@ int main(int argc, char* argv[]){
 
     // 打印提示信息
     printf("Total %d files processed. \n", fileNum);
+
+    return 0;
 }
