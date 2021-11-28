@@ -74,7 +74,7 @@
    cmake --build .
    ```
 
-2. 最终得到`word_count_mt`可执行文件
+2. 最终得到`word_count_mt`可执行文件（同时得到`word_count`可执行文件，它基于单线程）
 
 ## 六、效果截图
 
@@ -82,7 +82,7 @@
 
    <img src='./pic/运行截图1.png' width='70%'>
    
-2. 使用`./word_count_mt txtDir`对目录下的文件进行单词计数
+2. 使用`./word_count_mt ../txtDir`对目录下的文件进行单词计数
 
    <img src='./pic/运行截图3.png' width='70%'>
 
