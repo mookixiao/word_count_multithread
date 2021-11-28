@@ -2,8 +2,11 @@
 // Created by mooki on 11/21/21.
 //
 
+/* 多线程单词计数程序 */
+
 #include <ctype.h>
 #include <dirent.h>
+#include <errno.h>
 #include <pthread.h>
 #include <stdint.h>
 #include <string.h>
@@ -189,13 +192,13 @@ void traverseAndCount(char* dirName, DIR* dir){
 
 /* 输出结果 */
 void printResult(){
-    printf("%3s %-10s %-10s %-10s\n", "IDX", "WORD", "NUM", "PERCENT(%)");
+    printf("%10s %-20s %-10s %-10s\n", "IDX", "WORD", "NUM", "PERCENT(%)");
     uint32_t idx = 0;
 
     WordNode *wordNodeP;
     for(uint32_t i = 0; i < MOD; ++i){
         for(wordNodeP = wordNodeHashTab[i].wordNodeP; wordNodeP != NULL ; wordNodeP = wordNodeP->next) {
-            printf("%3u %-10s %-10u %-10.2f\n", idx, wordNodeP->word, wordNodeP->num,
+            printf("%10u %-20s %-10u %-10.2f\n", idx, wordNodeP->word, wordNodeP->num,
                    (float)wordNodeP->num / (float)wordNum * 100);
             ++idx;
         }
@@ -204,7 +207,7 @@ void printResult(){
 
 int main(int argc, char* argv[]){
     if(argc != 2){
-        fprintf(stderr, "Usage: ./word_count_mt dirName");
+        fprintf(stderr, "Usage: ./word_count_mt dirName\n");
         return 0;
     }
 
@@ -212,7 +215,13 @@ int main(int argc, char* argv[]){
     initWordNodeHashTab();
 
     // 遍历目录树并处理文本文件
-    DIR* dir = opendir(argv[1]);
+    DIR* dir;
+    if((dir = opendir(argv[1])) == NULL){
+        if(errno == ENOTDIR){
+            printf("%s is not a dir. \n", argv[1]);
+        }
+        return 0;
+    }
     traverseAndCount(argv[1], dir);
 
     // 等待所有线程结束
