@@ -78,9 +78,17 @@
 
 ## 六、效果截图
 
-1. 使用`./word_count_mt`对目录下的文件进行单词计数
+1. 先使用`tree`命令观察要计数的文件所在目录树
 
    <img src='./pic/运行截图1.png' width='70%'>
+   
+2. 使用`./word_count_mt txtDir`对目录下的文件进行单词计数
+
+   <img src='./pic/运行截图3.png' width='70%'>
+
+3. 如果输入的路径名不是文件夹，则报错
+
+   <img src='./pic/运行截图2.png' width='70%'>
 
 ## 七、参考资料
 
